@@ -8,38 +8,38 @@ def parseInput(input):
         assert lines.count('') == 1
         emptyLine = lines.index("")
         freshRangesInput = lines[0: emptyLine]
-        foodsIdsInput = lines[emptyLine + 1: ]
+        itemsIdsInput = lines[emptyLine + 1: ]
     freshRanges = []
     for range in freshRangesInput:
         min, max = range.split('-')
         freshRanges.append((int(min), int(max)))
-    foodsIds = [int(id) for id in foodsIdsInput]
-    return freshRanges, foodsIds
+    itemsIds = [int(id) for id in itemsIdsInput]
+    return freshRanges, itemsIds
 
-def checkInRange(foodId, freshRange):
-    if foodId < freshRange[0]:
+def checkInRange(itemId, freshRange):
+    if itemId < freshRange[0]:
         return False
-    if foodId > freshRange[1]:
+    if itemId > freshRange[1]:
         return False
     return True
 
-def checkFreshnes(foodId, freshRanges):
+def checkFreshnes(itemId, freshRanges):
     for range in freshRanges:
         # print(f"  Checking range {range}")
-        if (checkInRange(foodId, range)):
+        if (checkInRange(itemId, range)):
             # print("  OK")
             return True
         # print("  KO")
     return False
 
 def doExercie1(inputPath):
-    freshRanges, foodsIds = parseInput(inputPath)
+    freshRanges, itemsIds = parseInput(inputPath)
     freshCount = 0
-    for food in foodsIds:
-        # print(f"Checking food {food}")
-        if (checkFreshnes(food, freshRanges)):
+    for item in itemsIds:
+        # print(f"Checking item {item}")
+        if (checkFreshnes(item, freshRanges)):
             freshCount += 1
-    # print(f"There are {freshCount} fresh foods")
+    # print(f"There are {freshCount} fresh items")
     return freshCount
 
 def doExercie2(inputPath):
@@ -74,7 +74,7 @@ def tests():
 tests()
 print("EXERCICE 1")
 result = doExercie1(inputPath)
-print(f"There are total of {result} fresh foods")
+print(f"There are total of {result} fresh items")
 print("EXERCICE 2")
 result = doExercie2(inputPath)
-print(f"There are total of {result} fresh foods")
+print(f"There are total of {result} fresh items")
