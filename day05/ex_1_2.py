@@ -39,7 +39,7 @@ def doExercie1(inputPath):
         # print(f"Checking food {food}")
         if (checkFreshnes(food, freshRanges)):
             freshCount += 1
-    print(f"There are {freshCount} fresh foods")
+    # print(f"There are {freshCount} fresh foods")
     return freshCount
 
 def doExercie2(inputPath):
@@ -47,13 +47,18 @@ def doExercie2(inputPath):
     freshRanges.sort(key = lambda range: range[0])
     last = 0
     for range in freshRanges:
-        print(range[0])
         assert range[0] >= last
         last = range[0]
-        # sif range[1] > maxNum:
-        #     maxNum = range[1]
-    
-    # print("The maximum number is: ", maxNum)
+    maxUnChecked = 0
+    totalFresh = 0
+    for range in freshRanges:
+        lowFresh = max(maxUnChecked, range[0])
+        highFresh = range[1]
+        if (lowFresh > highFresh):
+            continue
+        totalFresh += highFresh - lowFresh + 1
+        maxUnChecked = highFresh + 1
+    return totalFresh
     
 def tests():
     assert checkInRange(1, (1 ,2)) == True
@@ -61,8 +66,15 @@ def tests():
     assert checkInRange(0, (1 ,2)) == False
     assert checkInRange(3, (1 ,2)) == False
     assert doExercie1(basicInputPath) == 3
+    assert doExercie1(inputPath) == 694
+    assert doExercie2(basicInputPath) == 14
+    assert doExercie2(inputPath) == 352716206375547
     print("ALL TESTS PASSED")
 
 tests()
-doExercie1(inputPath)
-doExercie2(inputPath)
+print("EXERCICE 1")
+result = doExercie1(inputPath)
+print(f"There are total of {result} fresh foods")
+print("EXERCICE 2")
+result = doExercie2(inputPath)
+print(f"There are total of {result} fresh foods")
